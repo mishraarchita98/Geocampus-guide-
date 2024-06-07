@@ -1,0 +1,25 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-74.0060, 40.7128]  # Example coordinates
+            },
+            "properties": {
+                "name": "Building 1"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [-74.0059, 40.7130]
+            },
+            "properties": {
+                "name": "Building 2"
+            }
+        }
+    ]
+}

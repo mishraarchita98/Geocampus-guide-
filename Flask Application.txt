@@ -1,0 +1,34 @@
+Flask Application 
+from flask import Flask, render_template
+import folium
+import geopandas as gpd
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    # Load your campus GIS data
+    campus_data = gpd.read_file('static/your_campus_data.geojson')
+
+    # Initialize the map centered around the campus
+    latitude, longitude = 40.7128, -74.0060  # Replace with your campus coordinates
+    campus_map = folium.Map(location=[latitude, longitude], zoom_start=15)
+
+    # Add buildings to the map
+    def add_buildings_to_map(gdf, folium_map):
+        for _, row in gdf.iterrows():
+            folium.Marker(
+                location=[row.geometry.y, row.geometry.x],
+                popup=row['name'],  # assuming each row has a 'name' column
+                tooltip=row['name']
+            ).add_to(folium_map)
+
+    add_buildings_to_map(campus_data, campus_map)
+
+    # Save the map to an HTML file
+    campus_map.save('templates/map.html')
+    
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
